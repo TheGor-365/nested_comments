@@ -1,6 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @post %>
+<div class="shadow p-5 my-5">
+  <%= render @post %>
+</div>
+
+<div class="shadow p-5 my-5">
+  <h4>Comments:</h4>
+  <%= render 'comments/form', locals: { post: @post } %><hr>
+  <%= render @post.comments.order(id: :desc) %>
+</div>
 
 <div class="btn-group my-5">
   <%= link_to "Edit this post", edit_post_path(@post), class: "btn btn-sm btn-outline-light" %>
