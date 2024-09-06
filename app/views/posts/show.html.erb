@@ -6,8 +6,8 @@
 
 <div class="shadow p-5 my-5">
   <h4>Comments:</h4>
-  <%= render 'comments/form', locals: { post: @post } %><hr>
-  <%= render @post.comments.order(id: :desc) %>
+  <%= render partial: 'comments/form', locals: { post: @post, parent: nil } %><hr>
+  <%= render @post.comments.where(parent_id: nil).includes(:user).order(id: :desc) %>
 </div>
 
 <div class="btn-group my-5">
@@ -15,3 +15,12 @@
   <%= link_to "Back to posts", posts_path, class: "btn btn-sm btn-outline-light" %>
   <%= button_to "Destroy this post", @post, method: :delete, class: "btn btn-sm btn-outline-light" %>
 </div>
+
+<script type="text/javascript">
+  document.querySelectorAll('.comment-form-display').forEach((el) => {
+    el.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      el.nextElementSibling.style = 'display: block;'
+    })
+  })
+</script>

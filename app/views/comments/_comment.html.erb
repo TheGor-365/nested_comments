@@ -1,9 +1,13 @@
 <article class="text-muted">
-  <p>
-    <%= comment.content %>
-  </p>
+  <p><%= comment.content %></p>
   <small>
     <%= comment.user.email %>
   </small>
+  <a href="#" class="comment-form-display">reply</a>
+  <div class="comment-form">
+    <%= render partial: 'comments/form', locals: { post: comment.post, parent: comment } %>
+  </div>
+  <div class="ps-5 mt-3">
+    <%= render comment.comments.order(id: :desc) %>
+  </div><hr>
 </article>
-<hr>
