@@ -4,6 +4,23 @@
   <%= render @post %>
 </div>
 
+<%= @post.likes.count %> <p>Likes</p>
+<% like = current_user.likes.find_by(post: @post) %>
+
+<% if like.nil? %>
+  <%= button_to 'Like', likes_path, params: { like: { post_id: @post.id }}, method: :post %>
+  <form class="" action="/likes" method="post">
+    <input type="hidden" name="like[post_id]" value="<%= @post.id %>">
+    <input type="submit" name="" value="Like">
+  </form>
+<% else %>
+  <%= button_to 'Unlike', like_path(like), method: :delete %>
+  <form class="" action="<%= like_path(like) %>" method="post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" name="" value="Unlike">
+  </form>
+<% end %>
+
 <div class="shadow p-5 my-5">
   <h4>Comments:</h4>
   <%= render partial: 'comments/form', locals: { post: @post, parent: nil } %><hr>
